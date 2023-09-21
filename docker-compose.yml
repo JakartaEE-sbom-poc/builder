@@ -1,0 +1,33 @@
+version: '3.8'
+services:
+
+  jakartaee-buildar:
+    build:
+      context: ./docker/jakartee-builder
+      dockerfile: builder.Dockerfile
+    image: jakartee/builder:jdk11-mvn
+    container_name: jakartee-builder
+    hostname: jakartee-builder
+    env_file:
+      - docker/jakartee-builder/env
+    networks:
+      jakartee-network:
+        aliases:
+          - jakartee
+    environment:
+      - USER_ID=${USER_ID}
+      - GROUP_ID=${GROUP_ID}
+
+
+
+volumes:
+  opensearch-data1:
+    driver: local
+  opensearch-data2:
+    driver: local
+
+
+networks:
+  jakartee-network:
+    driver: bridge
+
